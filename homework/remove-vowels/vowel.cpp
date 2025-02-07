@@ -2,7 +2,7 @@
 
 std::vector<std::string> removeVowels(std::vector<std::string>& input)
 {
-	std::string vowels = "aeyuio";
+	std::string vowels = "aeiouyAEIOUY";
 	std::vector<std::string> output;
 
 	for (auto word : input)
