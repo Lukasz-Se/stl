@@ -1,4 +1,4 @@
-#include "vowel.h"
+#include "vowel.hpp"
 
 std::vector<std::string> removeVowels(std::vector<std::string>& input)
 {
