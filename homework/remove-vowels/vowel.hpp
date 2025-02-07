@@ -1,5 +1,5 @@
-#ifndef VOWEL_HPP
-#define VOWEL_HPP
+#ifndef VOWEL_H
+#define VOWEL_H
 #include <vector>
 #include <iostream>
 
