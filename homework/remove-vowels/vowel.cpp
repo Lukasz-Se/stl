@@ -1,6 +1,6 @@
 #include "vowel.hpp"
 
-std::vector<std::string> removeVowels(std::vector<std::string>& input)
+void removeVowels(std::vector<std::string>& input)
 {
 	std::string vowels = "aeiouyAEIOUY";
 	std::vector<std::string> output;
