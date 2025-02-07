@@ -15,7 +15,8 @@ std::vector<std::string> removeVowels(std::vector<std::string>& input)
 					letter_in_word--;
 					break;
 				}
-		output.push_back(word);
+		if(word.length())
+			output.push_back(word);
 	}
 	return output;
 }
