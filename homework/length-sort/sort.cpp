@@ -1,8 +1,4 @@
-#pragma once
-#include <forward_list>
-#include <deque>
-#include <algorithm>
-#include<iostream>
+#include "sort.h"
 
 using namespace std;
 
