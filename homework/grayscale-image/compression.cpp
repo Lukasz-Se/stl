@@ -36,3 +36,32 @@ vector<pair<uint8_t, uint8_t>> compressGrayscale(array<array<uint8_t, width>, he
 
 	return compressedBitmap;
 }
+
+array<array<uint8_t, width>, height> decompressGrayscale(vector<pair<uint8_t, uint8_t>>& compressedBitmap)
+{
+	array<array<uint8_t, width>, height> output;
+
+	int row = 0;
+	int column = 0;
+	for (auto it : compressedBitmap)
+	{
+		if (row < height)
+		{
+			for (int k = 0; k < it.second; k++)
+			{
+				if (column < width)
+				{
+					output.at(row).at(column) = it.first;
+					column++;
+				}
+				if (column == width)
+				{
+					column = 0;
+					row++;
+				}
+			}
+		}
+	}
+
+	return output;
+}
