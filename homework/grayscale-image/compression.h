@@ -3,6 +3,7 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+#include <cstdint>
 
 constexpr size_t width = 10;
 constexpr size_t height = 3;
