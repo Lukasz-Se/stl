@@ -1,4 +1,4 @@
-#include "CompressGrayscale.h"
+#include "compression.h"
 
 using namespace std;
 
