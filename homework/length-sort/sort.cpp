@@ -1,8 +1,7 @@
-#include "sort.hpp"
+#include "sort.h"
 using namespace std;
 
-deque<string> lengthSort(forward_list<string>& input) 
-{
+deque<string> lengthSort(forward_list<string>& input) {
     deque<string> temp;
     for (auto element : input)
         temp.push_back(element);
