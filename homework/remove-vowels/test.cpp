@@ -1,7 +1,7 @@
 #include <vector>
 
 #include "gtest/gtest.h"
-#include "vowel.hpp"
+#include "vowel.h"
 
 TEST(removeVowelsTest, ShouldRemoveUppercaseVowels) {
     std::vector<std::string> vec{
