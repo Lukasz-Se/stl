@@ -10,5 +10,4 @@ int main()
 
 	std::cout << ArithmeticAverage(first, second) << std::endl;
 	std::cout << Distance(v1, v2) << std::endl;
-
 }
