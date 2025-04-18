@@ -15,9 +15,9 @@ double Distance(const std::vector<int>& first, const std::vector<int>& second)
 	{
 		std::vector<int> temp(first.size());
 		std::transform(begin(first), end(first), begin(second), begin(temp), std::minus<int>());
-		std::transform(begin(temp), end(temp), begin(temp), [](int& number) { return std::pow(number, 2); });
+		std::transform(begin(temp), end(temp), begin(temp), [](int& number) { return pow(number, 2); });
 
-		return std::sqrt(std::accumulate(begin(temp), end(temp), 0));
+		return sqrt(std::accumulate(begin(temp), end(temp), 0));
 	}
 	return -1.0;
 }
