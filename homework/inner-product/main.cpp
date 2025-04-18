@@ -1,26 +1,14 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <numeric>
+#include "ArithmeticAverage.h"
 
-double ArithmeticAverage(const std::vector<int>& first, const std::vector<int>& second)
+int main()
 {
-	double SumOfFirstVec = std::accumulate(begin(first), end(first), 0);
-	double SumOfSecondVec = std::accumulate(begin(second), end(second), 0);
-	double SumOfElements = first.size() + second.size();
+	std::vector<int> first{ -5, 4, 2, -5, 2, 4, 6, 7 };
+	std::vector<int> second{ 3, 5, -2, 6, 7, -3, 6, 9 };
 
-	return (SumOfFirstVec + SumOfSecondVec) / SumOfElements;
-}
+	std::vector<int> v1{ 7, 4, 3 };
+	std::vector<int> v2{ 17, 6, 2 };
 
-double Distance(const std::vector<int>& first, const std::vector<int>& second)
-{
-	if (first.size() == second.size())
-	{
-		std::vector<int> temp(first.size());
-		std::transform(begin(first), end(first), begin(second), begin(temp), std::minus<int>());
-		std::transform(begin(temp), end(temp), begin(temp), [](int& number) { return std::pow(number, 2); });
+	std::cout << ArithmeticAverage(first, second) << std::endl;
+	std::cout << Distance(v1, v2) << std::endl;
 
-		return std::sqrt(std::accumulate(begin(temp), end(temp), 0));
-	}
-	return -1.0;
 }
