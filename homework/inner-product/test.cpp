@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "ArithmeticAverage.hpp"
+#include "ArithmeticAverage.h"
 #include "gtest/gtest.h"
 
 constexpr double epsilon = 0.001;
