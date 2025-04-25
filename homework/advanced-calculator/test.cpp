@@ -2,7 +2,7 @@
 #include <cmath>
 #include <vector>
 
-#include "advancedCalculator.hpp"
+#include "advancedCalculator.h"
 #include "gtest/gtest.h"
 
 bool cmp(double first, double second, double epsilon = 0.5) {
