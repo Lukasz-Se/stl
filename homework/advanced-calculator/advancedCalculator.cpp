@@ -1,4 +1,4 @@
-#include "AdvancedCalculator.h"
+#include "advancedCalculator.h"
 
 bool isInteger(double n) {
 	return std::floor(n) == n;
