@@ -28,8 +28,8 @@ const std::map<const char, std::function<double(double, double)>> operations{
 	{'/', std::divides<double>()},
 	{'%', std::modulus<int>()},
 	{'!', [](auto base, auto empty) {if (base >= 0)
-	return std::tgamma(base + 1);
-	else return -std::tgamma(-base + 1); }},
+	return tgamma(base + 1);
+	else return -tgamma(-base + 1); }},
 	{'^', [](auto base, auto exponent) {return pow(base, exponent); }},
 	{'$', [](auto base, auto exponent) {return pow(base, 1.0 / exponent); }}
 };
