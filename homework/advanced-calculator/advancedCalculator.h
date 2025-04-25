@@ -4,6 +4,7 @@
 #include <functional>
 #include <algorithm>
 #include <sstream>
+#include <cmath>
 
 enum class ErrorCode
 {
