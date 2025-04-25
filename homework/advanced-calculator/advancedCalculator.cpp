@@ -10,6 +10,8 @@ ErrorCode stringToDouble(std::string input, double* output) {
 	std::string all = special_characters + signs;
 	*output = -9999.9999;
 
+	if (input.at(0) == '.')
+		return ErrorCode::BadFormat;
 	if (!isdigit(input.at(input.size() - 1)))
 		return ErrorCode::BadFormat;
 	if (std::any_of(begin(all), end(all), [&input](char c) {return std::count(begin(input), end(input), c) > 1; }))
@@ -17,8 +19,8 @@ ErrorCode stringToDouble(std::string input, double* output) {
 	if (std::any_of(begin(signs), end(signs), [&input](char c) {return std::count(begin(input) + 1, end(input), c) != 0; }))
 		return ErrorCode::BadFormat;
 	if (std::any_of(begin(input), end(input), [](char c) {return c == ','; }))
-		return ErrorCode::BadFormat;
-	if (input.at(0) == '.')
+		return ErrorCode::BadFormat;	
+	if (std::count(begin(input), end(input), '+') > 0)
 		return ErrorCode::BadFormat;
 
 	std::stringstream ss;
