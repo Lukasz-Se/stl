@@ -16,6 +16,8 @@ ErrorCode stringToDouble(std::string input, double* output) {
 		return ErrorCode::BadFormat;
 	if (std::any_of(begin(signs), end(signs), [&input](char c) {return std::count(begin(input) + 1, end(input), c) != 0; }))
 		return ErrorCode::BadFormat;
+	if (std::any_of(begin(input), end(input), [](char c) {return c == ','; }))
+		return ErrorCode::BadFormat;
 	if (input.at(0) == '.')
 		return ErrorCode::BadFormat;
 
@@ -81,7 +83,7 @@ ErrorCode process(std::string input, double* out) {
 
 	input.erase(std::remove(begin(input), end(input), ' '), end(input));
 
-	if (CheckIfStringIsLegal(&input, all_allowed_symbols) != ErrorCode::OK)
+	if (CheckIfStringIsLegal(&input, all_allowed_symbols + ',') != ErrorCode::OK)
 		return ErrorCode::BadCharacter;
 
 	Data data;
