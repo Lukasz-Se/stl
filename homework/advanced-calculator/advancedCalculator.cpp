@@ -33,19 +33,6 @@ ErrorCode stringToDouble(std::string input, double* output) {
 	return ErrorCode::OK;
 }
 
-const std::map<const char, std::function<double(double, double)>> operations{
-	{'+', std::plus<double>()},
-	{'-', std::minus<double>()},
-	{'*', std::multiplies<double>()},
-	{'/', std::divides<double>()},
-	{'%', std::modulus<int>()},
-	{'!', [](auto base, auto empty) {if (base >= 0)
-	return std::tgamma(base + 1);
-	else return -std::tgamma(-base + 1); }},
-	{'^', [](auto base, auto exponent) {return pow(base, exponent); }},
-	{'$', [](auto base, auto exponent) {return pow(base, 1.0 / exponent); }}
-};
-
 ErrorCode CheckBadChars(std::string* input, const std::string& symbols) {
 	if (!std::all_of(begin(*input), end(*input), [symbols](char c) {
 		return std::any_of(begin(symbols), end(symbols), [c](char aa) {return c == aa || isdigit(c); }); }))
