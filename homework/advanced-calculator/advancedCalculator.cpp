@@ -4,24 +4,27 @@ bool isInteger(double n) {
 	return std::floor(n) == n;
 }
 
-ErrorCode stringToDouble(std::string input, double* output) {
+bool isItCorrectNumber(std::string input)
+{
 	std::string special_characters = ".";
-	std::string signs = "-,+";
+	std::string signs = "-";
 	std::string all = special_characters + signs;
-	*output = -9999.9999;
 
 	if (input.at(0) == '.')
-		return ErrorCode::BadFormat;
+		return false;
 	if (!isdigit(input.at(input.size() - 1)))
-		return ErrorCode::BadFormat;
+		return false;	
+	if (std::any_of(begin(input) + 1, end(input), [](char c) {return c == '-';}))
+		return false;
 	if (std::any_of(begin(all), end(all), [&input](char c) {return std::count(begin(input), end(input), c) > 1; }))
-		return ErrorCode::BadFormat;
-	if (std::any_of(begin(signs), end(signs), [&input](char c) {return std::count(begin(input) + 1, end(input), c) != 0; }))
-		return ErrorCode::BadFormat;
-	if (std::any_of(begin(input), end(input), [](char c) {return c == ','; }))
-		return ErrorCode::BadFormat;	
-	if (std::count(begin(input), end(input), '+') > 0)
-		return ErrorCode::BadFormat;
+		return false;
+	if (std::any_of(begin(input), end(input), [](char c) {return c == ',';}))
+		return false;
+
+		return true;
+}
+
+ErrorCode stringToDouble(std::string input, double* output) {
 
 	std::stringstream ss;
 	ss << input;
@@ -30,7 +33,26 @@ ErrorCode stringToDouble(std::string input, double* output) {
 	return ErrorCode::OK;
 }
 
-ErrorCode CheckIfStringIsLegal(std::string* input, const std::string& symbols) {
+struct Data {
+	char operation;
+	double frist_value = 0.0;
+	double second_value = 0.0;
+};
+
+const std::map<const char, std::function<double(double, double)>> operations{
+	{'+', std::plus<double>()},
+	{'-', std::minus<double>()},
+	{'*', std::multiplies<double>()},
+	{'/', std::divides<double>()},
+	{'%', std::modulus<int>()},
+	{'!', [](auto base, auto empty) {if (base >= 0)
+	return std::tgamma(base + 1);
+	else return -std::tgamma(-base + 1); }},
+	{'^', [](auto base, auto exponent) {return pow(base, exponent); }},
+	{'$', [](auto base, auto exponent) {return pow(base, 1.0 / exponent); }}
+};
+
+ErrorCode CheckBadChars(std::string* input, const std::string& symbols) {
 	if (!std::all_of(begin(*input), end(*input), [symbols](char c) {
 		return std::any_of(begin(symbols), end(symbols), [c](char aa) {return c == aa || isdigit(c); }); }))
 		return ErrorCode::BadCharacter;
@@ -47,21 +69,28 @@ ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Da
 
 	temp.resize(std::distance(begin(input), it));
 	std::copy(begin(input), it, begin(temp));
-	if (stringToDouble(temp, &output->frist_value) != ErrorCode::OK)
+	
+	if (!isItCorrectNumber(temp))
 		return ErrorCode::BadFormat;
-	std::transform(begin(input), it, begin(input), [](auto c) {return ' '; });
+	stringToDouble(temp, &output->frist_value);
+
+	std::transform(begin(input), it, begin(input), []() {return ' '; });
 
 	if (output->operation != '!')
 	{
+		temp.clear();
 		temp.resize(std::distance(it + 1, end(input)));
 		std::copy(it + 1, end(input), begin(temp));
-		if (stringToDouble(temp, &output->second_value) != ErrorCode::OK)
+		if(!isItCorrectNumber(temp))
 			return ErrorCode::BadFormat;
-		std::transform(it + 1, end(input), it + 1, [](auto c) {return ' '; });
+		stringToDouble(temp, &output->second_value);
+		std::transform(it + 1, end(input), it + 1, []() {return ' '; });
 	}
 
-	if (!std::all_of(begin(input), end(input), [](char c) {return c == ' '; }))
-		return ErrorCode::BadFormat;
+	std::cout << "raw input:" << input << std::endl;
+
+	//if (std::any_of(begin(input), end(input), [](char c) {return c == ','; }))
+	//	return ErrorCode::BadFormat;
 
 	if (output->operation == '%' && !isInteger(output->frist_value))
 		return ErrorCode::ModuleOfNonIntegerValue;
@@ -70,8 +99,11 @@ ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Da
 		return ErrorCode::DivideBy0;
 
 	if (output->operation == '$')
-		if (output->frist_value < 0)
+		if (output->frist_value < 0 || output->second_value < 0)
 			return ErrorCode::SqrtOfNegativeNumber;
+
+	if (!std::all_of(begin(input), end(input), [](char c) {return c == ' '; }))
+		return ErrorCode::BadFormat;
 
 	return ErrorCode::OK;
 }
@@ -80,18 +112,20 @@ ErrorCode process(std::string input, double* out) {
 	*out = 0.0;
 
 	std::string allowed_operations = "+-*/%^$!";
-	std::string allowed_operands = ".";
+	std::string allowed_operands = ".,";
 	std::string all_allowed_symbols = allowed_operations + allowed_operands;
 
 	input.erase(std::remove(begin(input), end(input), ' '), end(input));
 
-	if (CheckIfStringIsLegal(&input, all_allowed_symbols + ',') != ErrorCode::OK)
-		return ErrorCode::BadCharacter;
+	ErrorCode result;
+	result = CheckBadChars(&input, all_allowed_symbols);
+	if (result != ErrorCode::OK)
+		return result;
 
 	Data data;
 	ErrorCode error = SeparateOperands(input, allowed_operations, &data);
-	if (error != ErrorCode::OK)
-		return error;
+	if (result != ErrorCode::OK)
+		return result;
 
 	*out = operations.find(data.operation)->second(data.frist_value, data.second_value);
 
