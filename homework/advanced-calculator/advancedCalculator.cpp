@@ -83,7 +83,7 @@ ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Da
 	if (output->operation == '/' && output->second_value == 0)
 		return ErrorCode::DivideBy0;
 
-	if (output->operation == '$')
+	if (output->operation == '^')
 		if (output->frist_value < 0 || output->second_value < 0)
 			return ErrorCode::SqrtOfNegativeNumber;
 
