@@ -10,7 +10,7 @@ bool isItCorrectNumber(std::string input)
 	std::string signs = "-";
 	std::string all = special_characters + signs;
 
-	if (input.at(0) == '.')
+	if (input.at(0) == '.' || input.at(0) == '+')
 		return false;
 	if (!isdigit(input.at(input.size() - 1)))
 		return false;	
