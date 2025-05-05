@@ -20,7 +20,11 @@ bool isItCorrectNumber(std::string input)
 		return false;
 	if (std::any_of(begin(input), end(input), [](char c) {return c == ',';}))
 		return false;
-
+	if (!std::all_of(begin(input), end(input),
+	[all](char c) {
+		return std::any_of(begin(all), end(all), [c](char special) {
+			return c == special || isdigit(c); }); }))
+	return false;
 		return true;
 }
 
