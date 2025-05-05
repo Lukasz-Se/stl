@@ -55,7 +55,7 @@ ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Da
 		return ErrorCode::BadFormat;
 	stringToDouble(temp, &output->frist_value);
 
-	std::transform(begin(input), it, begin(input), []() {return ' '; });
+	std::transform(begin(input), it, begin(input), [](char c) {return ' '; });
 
 	if (output->operation != '!')
 	{
@@ -65,7 +65,7 @@ ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Da
 		if(!isItCorrectNumber(temp))
 			return ErrorCode::BadFormat;
 		stringToDouble(temp, &output->second_value);
-		std::transform(it + 1, end(input), it + 1, []() {return ' '; });
+		std::transform(it + 1, end(input), it + 1, [](char c) {return ' '; });
 	}
 
 	std::cout << "raw input:" << input << std::endl;
