@@ -104,7 +104,7 @@ ErrorCode process(std::string input, double* out) {
 		return result;
 
 	Data data;
-	ErrorCode error = SeparateOperands(input, allowed_operations, &data);
+	result = SeparateOperands(input, allowed_operations, &data);
 	if (result != ErrorCode::OK)
 		return result;
 
