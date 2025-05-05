@@ -36,6 +36,7 @@ const std::map<const char, std::function<double(double, double)>> operations{
 };
 
 bool isInteger(double n);
+bool isItCorrectNumber(std::string input);
 ErrorCode stringToDouble(std::string input, double* output);
 ErrorCode CheckIfStringIsLegal(std::string* input, const std::string& symbols);
 ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Data* output);
