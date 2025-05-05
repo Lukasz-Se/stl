@@ -33,12 +33,6 @@ ErrorCode stringToDouble(std::string input, double* output) {
 	return ErrorCode::OK;
 }
 
-struct Data {
-	char operation;
-	double frist_value = 0.0;
-	double second_value = 0.0;
-};
-
 const std::map<const char, std::function<double(double, double)>> operations{
 	{'+', std::plus<double>()},
 	{'-', std::minus<double>()},
