@@ -60,6 +60,8 @@ ErrorCode CheckArithemticErrors(const std::string& raw_input, const Data& input_
 
 	if (!std::all_of(begin(raw_input), end(raw_input), [](char c) {return c == ' '; }))
 		return ErrorCode::BadFormat;
+
+	return ErrorCode::OK;
 }
 
 ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Data* output) {
