@@ -77,8 +77,9 @@ ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Da
 	//if (std::any_of(begin(input), end(input), [](char c) {return c == ','; }))
 	//	return ErrorCode::BadFormat;
 
-	if (output->operation == '%' && !isInteger(output->frist_value))
-		return ErrorCode::ModuleOfNonIntegerValue;
+	if (output->operation == '%')
+		if(!isInteger(output->second_value) || output->second_value == 0)
+			return ErrorCode::ModuleOfNonIntegerValue;
 
 	if (output->operation == '/' && output->second_value == 0)
 		return ErrorCode::DivideBy0;
