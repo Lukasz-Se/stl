@@ -39,5 +39,6 @@ bool isInteger(double n);
 bool isItCorrectNumber(std::string input);
 ErrorCode stringToDouble(std::string input, double* output);
 ErrorCode CheckIfStringIsLegal(std::string* input, const std::string& symbols);
+ErrorCode CheckArithemticErrors(const std::string& raw_input, const Data& input_data_structure);
 ErrorCode SeparateOperands(std::string& input, const std::string& allowedOps, Data* output);
 ErrorCode process(std::string input, double* out);
