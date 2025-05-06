@@ -115,7 +115,7 @@ ErrorCode process(std::string input, double* out) {
 	if (result != ErrorCode::OK)
 	return result;
 	
-	*out = operations.find(data.operation)->second(data.frist_value, data.second_value);
+	*out = operations.find(data.operation)->second(data.first_value, data.second_value);
 
 	return ErrorCode::OK;
 }
