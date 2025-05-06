@@ -18,7 +18,7 @@ enum class ErrorCode
 
 struct Data {
 	char operation;
-	double frist_value = 0.0;
+	double first_value = 0.0;
 	double second_value = 0.0;
 };
 
